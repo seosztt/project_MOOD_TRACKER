@@ -33,7 +33,7 @@ AI허브에서 제공한 데이터에는 총 7개의 클래스(기쁨, 분노, �
 
 ### 정성평가의 어려움
 
-![sad_neu](C:\Users\USER\Final_Project\image\sad_neu.png)![sad_neu](C:\Users\USER\Final_Project\image\sad_new_result.png)
+![sad_neu](https://github.com/seosztt/project_MOOD_TRACKER/blob/master/image/sad_neu.png?raw=true)![sad_neu](https://github.com/seosztt/project_MOOD_TRACKER/blob/master/image/sad_new_result.png?raw=true)
 
 - AI허브에서 제공 받았을 때 이 사진은 sad로 labeling되어있었다. 그러나 이 사진의 표정이 어떤 감정을 나타내는지는 사람에게 물어도 뚜렷하게 대답하기 어렵다. 이 표정이 어떤 감정을 나타내는지 모든 사람이 동의하는 객관적 답은 없을 것이다. 학습시킨 모델이 출력하는 결과값을 보아도 happy를 제외한 모든 감정에 5%이상의 확률을 나타낸다.
 
