@@ -110,7 +110,7 @@ ensemble(25:20:30:25): 0.7219 / 0.7533
 
 ### Confusion Matrix
 
-![confusion_matrix](C:\Users\USER\Final_Project\image\confusion_matrix.png)
+![confusion_matrix](https://github.com/seosztt/project_MOOD_TRACKER/blob/master/image/confusion_matrix.png?raw=true)
 
 - Confusion Martix를 통해 클래스별 precision과 recall을 확인하였다. unrest가 다른 클래스에 비해 f1-score가 낮게 나왔다.
 - unrest의 f1-score를 0.5 이상으로 높이는 것을 목표로 하이퍼파라미터 튜닝과 ensemble을 시도하였다. 그 결과 unrest의 f1-score 0.51을 달성하였다.
