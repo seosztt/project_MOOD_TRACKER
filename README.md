@@ -72,8 +72,6 @@ AI허브에서 제공한 데이터에는 총 7개의 클래스(기쁨, 분노, �
 - resnet50
 - alexnet
 
-이 네가지 모델을 import 하여 각각 학습을 진행하고 각 모델의 결과값의 가중 평균을 최종 결과값으로 하는 ensemble을 시도했다. 
-
 ### fine tuning
 
 처음에는 import한 모델의 성능이 강력할 것이라 여겨 import한 모델의 파라미터를 훼손하지 않고자 결과 출력층 전의 1~2개 층만 동결을 해제 했었다. 그러나 실험 결과 합성곱층의 절반 가까이 동결을 해제했더니 학습시간이 증가하긴 했지만 정확도가 개선되었다.
@@ -96,7 +94,7 @@ optimizer는 『케라스 창시자에게 배우는 딥러닝』의 저자 프�
 
 과적합을 줄이기 위해 regulation을 사용하였다.
 
-- image augmentation을 사용하면 학습 소요 시간이 길어지긴 했지만, 정확도가 개선되었다.
+- image augmentation을 적용하였다. 적용한 사진이 얼굴 표정을 훼손하지 않는 범위 내로 사용하였다. 사용하면 학습 소요 시간이 길어지긴 했지만, 정확도가 개선되었다.
 
 - 무작위로 층의 일부 출력 특성을 제외하는 dropout layer를 사용하여 과적합을 줄였다.
 
@@ -104,6 +102,7 @@ optimizer는 『케라스 창시자에게 배우는 딥러닝』의 저자 프�
 
 ### ensemble
 
+- 네가지 모델을 import 하여 각각 전이학습을 수행하고 각 모델의 결과값의 가중 평균을 최종 결과값으로 하는 ensemble을 시도했다. 
 - resnet50 모델의 정확도가 높아서 가중치를 높게 설정했다.
 - 여러 가중치를 실험해본 결과 resnet50(0.3), vgg-16(0.25), Xception(0.2), alexnet(0.25)가 가장 높은 정확도를 나타냈다.  
 
@@ -111,21 +110,21 @@ optimizer는 『케라스 창시자에게 배우는 딥러닝』의 저자 프�
 
 ### validation: loss / accuracy 
 
-VGG16: 0.8344 / 0.7004
+VGG16: 0.8388 / 0.7004
 
-Xception: 0.9072 / 0.6842
+Xception: 0.9080 / 0.6842
 
-resnet50: 0.9213 / 0.7287
+resnet50: 0.8384 / 0.7288
 
-alexnet: 0.7719 / 0.6982
+alexnet: 0.8765 / 0.7000
 
 ensemble(25:20:30:25): 0.7219 / 0.7533
 
 ### Confusion Matrix
 
-![confusion_matrix_heatmap](C:\Users\USER\Final_Project\image\confusion_matrix_heatmap.png)
+![confusion_matrix_heatmap](https://github.com/seosztt/project_MOOD_TRACKER/blob/master/image/confusion_matrix_heatmap.png?raw=true)
 
-![classification_report](C:\Users\USER\Final_Project\image\classification_report.png)
+![classification_report](https://github.com/seosztt/project_MOOD_TRACKER/blob/master/image/classification_report.png?raw=true)
 
 - Confusion Martix를 통해 클래스별 precision과 recall을 확인하였다. unrest가 다른 클래스에 비해 f1-score가 낮게 나왔다.
 - unrest의 f1-score를 0.5 이상으로 높이는 것을 목표로 하이퍼파라미터 튜닝과 ensemble을 시도하였다. 그 결과 unrest의 f1-score 0.51을 달성하였다.
@@ -146,6 +145,12 @@ test Accuracy: 0.7568
 
 - AI허브에서 제공 받았을 때 이 사진은 sad로 labeling되어있었다. 그러나 이 사진의 표정이 어떤 감정을 나타내는지는 사람에게 물어도 뚜렷하게 대답하기 어렵다. 이 표정이 어떤 감정을 나타내는지 모든 사람이 동의하는 객관적 답은 없을 것이다. 학습시킨 모델이 출력하는 결과값을 보아도 happy를 제외한 모든 감정에 5%이상의 확률을 나타낸다.
 - AI허브에서 제공한 labeling에 따른 정확도를 높히는 것을 목표로 했다. 그러나 사람마다 답이 다른 이런 문제에서 AI허브에서 제시한 답이 꼭 보편적으로 설득력 있는 답이라고 말하기는 어렵기에 예측값이 제시한 각 감정별 확률이 그럴싸하게 느껴지면 설득력 있는 모델이라고 생각할 수도 있겠다. 그러나 이것은 느낌에 의존하므로 정성평가이다.
+
+
+
+## 모델을 서비스에 적용
+
+개별 모델 적용시 잘 작동했으나, ensemble 적용 과정에서 오류가 발생하였다. model의 epoch history가 없는 게 원인인 듯 하였다. 프로젝트 기간의 제한으로 인해 오류를 고치지 못하고 서비스에는 개별 모델 중 정확도가 높았던 resnet50 모델을 적용하였다.
 
 
 
